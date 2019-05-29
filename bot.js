@@ -54,7 +54,7 @@ bot.on('/stats', async (msg) => {
       );
     }
 
-    const stats = ['User stats on Live Chess (Blitz):'];
+    const stats = ['===================================\n ==== User stats on Live Chess (Blitz) ==== \n==================================='];
     for (let user of users) {
       let url = `https://api.chess.com/pub/player/${user.username}/stats`;
       let res = await rp(url, { json: true });
@@ -62,7 +62,7 @@ bot.on('/stats', async (msg) => {
       stats.push(`${user.username} - ${rating} - ${rankingService.getLiveRating(rating)}`);
     }
 
-    stats.push('\nUser stats on Tactics:')
+    stats.push('\n===================================\n ======== User stats on Tactics ======= \n===================================')
     for (let user of users) {
       let url = `https://www.chess.com/stats/puzzles/${user.username}`;
       let res = await rp(url);
