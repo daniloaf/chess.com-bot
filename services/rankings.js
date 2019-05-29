@@ -1,10 +1,10 @@
 const NOVICE = '🐥';
-const SILVER_1 = '>';
-const SILVER_2 = '>>';
-const SILVER_3 = '>>>';
-const SILVER_4 = '>>>>';
-const SILVER_ELITE = '(>>>>';
-const SILVER_ELITE_MASTER = '(*>>>>';
+const SILVER_1 = '▶️';
+const SILVER_2 = '▶️▶️';
+const SILVER_3 = '▶️▶️▶️';
+const SILVER_4 = '▶️▶️▶️▶️';
+const SILVER_ELITE = '(⏩⏩';
+const SILVER_ELITE_MASTER = '(⚙️⏩⏩';
 const GOLD_NOVA_1 = '⭐️';
 const GOLD_NOVA_2 = '⭐️⭐️';
 const GOLD_NOVA_3 = '⭐️⭐️⭐️';
@@ -104,7 +104,32 @@ const getTacticsRating = (rank) => {
   return ranking;
 };
 
+const getAllRankings = () => {
+  let rankings = NOVICE 
+      + '\n' + SILVER_1
+      + '\n' + SILVER_2
+      + '\n' + SILVER_3
+      + '\n' + SILVER_4
+      + '\n' + SILVER_ELITE
+      + '\n' + SILVER_ELITE_MASTER
+      + '\n' + GOLD_NOVA_1
+      + '\n' + GOLD_NOVA_2
+      + '\n' + GOLD_NOVA_3
+      + '\n' + GOLD_NOVA_MASTER
+      + '\n' + MASTER_GUARDIAN_1
+      + '\n' + MASTER_GUARDIAN_2
+      + '\n' + MASTER_GUARDIAN_ELITE
+      + '\n' + DISTINGUISHED_MASTER_GUARDIAN
+      + '\n' + LEGENDARY_EAGLE
+      + '\n' + LEGENDARY_EAGLE_MASTER
+      + '\n' + SUPREME_MASTER_FISRT_CLASS
+      + '\n' + THE_GLOBAL_ELITE;
+    
+  return rankings;
+};
+
 module.exports = {
   getLiveRating,
-  getTacticsRating
+  getTacticsRating,
+  getAllRankings
 };

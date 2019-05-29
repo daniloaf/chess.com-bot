@@ -82,4 +82,17 @@ bot.on('/stats', async (msg) => {
   }
 });
 
+bot.on('/rankings', async (msg) => {
+  try {
+    return bot.sendMessage(msg.from.id, rankingService.getAllRankings(), { replyToMessage: msg.message_id });
+  } catch (err) {
+    console.err(err);
+    return bot.sendMessage(
+      msg.from.id,
+      `Could not list all rankings`,
+      { replyToMessage: msg.message_id }
+    );
+  }
+});
+
 module.exports = bot;
