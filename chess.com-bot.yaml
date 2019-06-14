@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: chesscom-bot
+  name: chesscom-bot-controller
+spec:
+  replicas: 1
+  selector:
+    name: chesscom-bot
+  template:
+    metadata:
+      labels:
+        name: chesscom-bot
+    spec:
+      containers:
+      - image: daniloaf/chesscom-bot:latest
+        name: chesscom-bot
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http-server
+        env:
+          - name: MONGODB_URI
+            valueFrom:
+              secretKeyRef:
+                name: ot-keys
+                key: MONGODB_URI_CHESS
+          - name: TELEGRAM_BOT_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: ot-keys
+                key: TELEGRAM_CHESSCOM_BOT_TOKEN

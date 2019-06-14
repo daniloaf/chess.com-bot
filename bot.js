@@ -17,27 +17,15 @@ bot.on(/^\/register (.+)$/, async (msg, props) => {
 
     let user = await userService.get({ username, chat_id: chatId });
     if (user) {
-      return bot.sendMessage(
-        msg.from.id,
-        `${username} already registered`,
-        { replyToMessage: msg.message_id }
-      );
+      return bot.sendMessage(msg.chat.id, `${username} already registered`);
     }
 
     user = await userService.create({ username: username, telegram_id: telegramId, chat_id: chatId });
 
-    return bot.sendMessage(
-      msg.from.id,
-      `${user.username} registered`,
-      { replyToMessage: msg.message_id }
-    );
+    return bot.sendMessage(msg.chat.id, `${user.username} registered`);
   } catch (err) {
     console.err(err);
-    return bot.sendMessage(
-      msg.from.id,
-      `Could not register ${username}`,
-      { replyToMessage: msg.message_id }
-    );
+    return bot.sendMessage(msg.chat.id, `Could not register ${username}`);
   }
 });
 
@@ -47,11 +35,7 @@ bot.on('/stats', async (msg) => {
     const users = await userService.list({ chat_id: chatId });
 
     if (!users) {
-      return bot.sendMessage(
-        msg.from.id,
-        `No user registered yet. User /register to register new usernames`,
-        { replyToMessage: msg.message_id }
-      );
+      return bot.sendMessage(msg.chat.id, `No user registered yet. User /register to register new usernames`);
     }
 
     const stats = ['=========================\n ===== Live Chess (Blitz) ===== \n========================='];
@@ -71,27 +55,19 @@ bot.on('/stats', async (msg) => {
       stats.push(`${user.username} - ${rating} - ${rankingService.getTacticsRating(rating)}`);
     }
 
-    return bot.sendMessage(msg.from.id, stats.join('\n'), { replyToMessage: msg.message_id });
+    return bot.sendMessage(msg.chat.id, stats.join('\n'));
   } catch (err) {
     console.err(err);
-    return bot.sendMessage(
-      msg.from.id,
-      `Could not list stats`,
-      { replyToMessage: msg.message_id }
-    );
+    return bot.sendMessage(msg.chat.id, `Could not list stats`);
   }
 });
 
 bot.on('/rankings', async (msg) => {
   try {
-    return bot.sendMessage(msg.from.id, rankingService.getAllRankings(), { replyToMessage: msg.message_id });
+    return bot.sendMessage(msg.chat.id, rankingService.getAllRankings());
   } catch (err) {
     console.err(err);
-    return bot.sendMessage(
-      msg.from.id,
-      `Could not list all rankings`,
-      { replyToMessage: msg.message_id }
-    );
+    return bot.sendMessage(msg.chat.id, `Could not list all rankings`);
   }
 });
 
