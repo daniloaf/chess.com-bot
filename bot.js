@@ -29,6 +29,26 @@ bot.on(/^\/register (.+)$/, async (msg, props) => {
   }
 });
 
+bot.on(/^\/unregister (.+)$/, async (msg, props) => {
+  const username = props.match[1];
+  try {
+    const telegramId = msg.from.id;
+    const chatId = msg.chat.id;
+
+    let user = await userService.get({ username, chat_id: chatId });
+    if (user) {
+      await userService.removeUser(user.id);
+      return bot.sendMessage(msg.chat.id, `${user.username} unregistered`);
+    } else {
+      return bot.sendMessage(msg.chat.id, `Could not unregister ${username}`);
+    }
+
+  } catch (err) {
+    console.err(err);
+    return bot.sendMessage(msg.chat.id, `Could not unregister ${username}`);
+  }
+});
+
 bot.on('/stats', async (msg) => {
   try {
     const chatId = msg.chat.id;
