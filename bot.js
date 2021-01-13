@@ -71,7 +71,7 @@ bot.on('/stats', async (msg) => {
       let url = `https://www.chess.com/stats/puzzles/${user.username}`;
       let res = await rp(url);
       let $ = cheerio.load(res);
-      let rating = $('.main-chart-stats-current').text();
+      let rating = $('.rating-block-container').text();
       stats.push(`${user.username} - ${rating} - ${rankingService.getTacticsRating(rating)}`);
     }
 
