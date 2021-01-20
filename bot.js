@@ -1,7 +1,6 @@
 const rp = require('request-promise');
 const dotenv = require('dotenv');
 const TeleBot = require('telebot');
-const cheerio = require('cheerio');
 const userService = require('./services/users');
 const rankingService = require('./services/rankings');
 
@@ -68,10 +67,16 @@ bot.on('/stats', async (msg) => {
 
     stats.push('\n========================\n ===== Tactics Ranking ===== \n========================')
     for (let user of users) {
-      let url = `https://www.chess.com/stats/puzzles/${user.username}`;
-      let res = await rp(url);
-      let $ = cheerio.load(res);
-      let rating = $('.rating-block-container').text();
+      let url = `https://www.chess.com/callback/member/stats/${user.username}`;
+      let res = await rp(url, { json: true });
+      let rating = 'No Score';
+      if (res.stats) {
+        res.stats.forEach(function(statsType) {
+          if (statsType.key === 'tactics') {
+            rating = statsType.stats.rating;
+          }
+        })
+      }
       stats.push(`${user.username} - ${rating} - ${rankingService.getTacticsRating(rating)}`);
     }
 
