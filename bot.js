@@ -67,7 +67,7 @@ bot.on('/stats', async (msg) => {
       users_live_ratings.push({ username: user.username, rating: rating });
     }
 
-    users_live_ratings.sort((a, b) => a.rating < b.rating);
+    users_live_ratings.sort((a, b) => b.rating - a.rating);
     users_live_ratings.forEach((ur, i) => (
       stats.push(`${i+1} - ${ur.username} - ${ur.rating} - ${rankingService.getLiveRating(ur.rating)}`)
     ));
@@ -89,7 +89,7 @@ bot.on('/stats', async (msg) => {
       users_tactics_ratings.push({ username: user.username, rating: rating });
     }
 
-    users_tactics_ratings.sort((a, b) => a.rating < b.rating);
+    users_tactics_ratings.sort((a, b) => b.rating - a.rating);
     users_tactics_ratings.forEach((ur, i) => (
       stats.push(`${i+1} - ${ur.username} - ${ur.rating} - ${rankingService.getTacticsRating(ur.rating)}`)
     ));
