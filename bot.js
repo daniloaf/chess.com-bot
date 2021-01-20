@@ -58,14 +58,23 @@ bot.on('/stats', async (msg) => {
     }
 
     const stats = ['=========================\n ===== Live Chess (Blitz) ===== \n========================='];
+
+    let users_live_ratings = [];
     for (let user of users) {
       let url = `https://api.chess.com/pub/player/${user.username}/stats`;
       let res = await rp(url, { json: true });
       let rating = res.chess_blitz && res.chess_blitz.last && res.chess_blitz.last.rating || 'No score';
-      stats.push(`${user.username} - ${rating} - ${rankingService.getLiveRating(rating)}`);
+      users_live_ratings.push({ username: user.username, rating: rating });
     }
 
+    users_live_ratings.sort((a, b) => b.rating - a.rating);
+    users_live_ratings.forEach((ur, i) => (
+      stats.push(`${i+1} - ${ur.username} - ${ur.rating} - ${rankingService.getLiveRating(ur.rating)}`)
+    ));
+
     stats.push('\n========================\n ===== Tactics Ranking ===== \n========================')
+
+    let users_tactics_ratings = [];
     for (let user of users) {
       let url = `https://www.chess.com/callback/member/stats/${user.username}`;
       let res = await rp(url, { json: true });
@@ -75,10 +84,15 @@ bot.on('/stats', async (msg) => {
           if (statsType.key === 'tactics') {
             rating = statsType.stats.rating;
           }
-        })
+        });
       }
-      stats.push(`${user.username} - ${rating} - ${rankingService.getTacticsRating(rating)}`);
+      users_tactics_ratings.push({ username: user.username, rating: rating });
     }
+
+    users_tactics_ratings.sort((a, b) => b.rating - a.rating);
+    users_tactics_ratings.forEach((ur, i) => (
+      stats.push(`${i+1} - ${ur.username} - ${ur.rating} - ${rankingService.getTacticsRating(ur.rating)}`)
+    ));
 
     return bot.sendMessage(msg.chat.id, stats.join('\n'));
   } catch (err) {
