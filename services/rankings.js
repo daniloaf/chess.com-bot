@@ -15,7 +15,7 @@ const MASTER_GUARDIAN_ELITE = '⚔️︻╦╤─⚔️';
 const DISTINGUISHED_MASTER_GUARDIAN = '✨🌟✨';
 const LEGENDARY_EAGLE = '🦅';
 const LEGENDARY_EAGLE_MASTER = '✨🦅✨';
-const SUPREME_MASTER_FISRT_CLASS = '✨🌐✨';
+const SUPREME_MASTER_FIRST_CLASS = '✨🌐✨';
 const THE_GLOBAL_ELITE = '✨🌎✨';
 
 const getLiveRating = (rank) => {
@@ -53,7 +53,7 @@ const getLiveRating = (rank) => {
   } else if (rank < 1600) {
     ranking = LEGENDARY_EAGLE_MASTER;
   } else if (rank < 1700) {
-    ranking = SUPREME_MASTER_FISRT_CLASS;
+    ranking = SUPREME_MASTER_FIRST_CLASS;
   } else {
     ranking = THE_GLOBAL_ELITE;
   }
@@ -92,12 +92,12 @@ const getTacticsRating = (rank) => {
     ranking = MASTER_GUARDIAN_ELITE;
   } else if (rank < 1900) {
     ranking = DISTINGUISHED_MASTER_GUARDIAN;
-  } else if (rank < 2000) {
-    ranking = LEGENDARY_EAGLE;
   } else if (rank < 2100) {
+    ranking = LEGENDARY_EAGLE;
+  } else if (rank < 2300) {
     ranking = LEGENDARY_EAGLE_MASTER;
-  } else if (rank < 2200) {
-    ranking = SUPREME_MASTER_FISRT_CLASS;
+  } else if (rank < 2500) {
+    ranking = SUPREME_MASTER_FIRST_CLASS;
   } else {
     ranking = THE_GLOBAL_ELITE;
   }
